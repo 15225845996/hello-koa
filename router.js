@@ -9,13 +9,10 @@ const about = ctx => {
     ctx.response.body = '<p>This is about page!</p>'
 };
 
-router.get("/api/time",handler.time)
-    .get("/api/hello",handler.hello)
-    .get("/api/users/list",handler.users)
-    .get("/api/users",handler.getUserById)
-    .post("/api/addUser",handler.addUser)
-    .get("/view/addUser",async function(ctx) {
-    ctx.response.body = fs.readFileSync("./views/addUser.html", "utf8")
-    });
+router.get("/manager/findByMobile",handler.findByMobile);
+router.post("/manager/updateByMobile",handler.updateByMobile);
+router.get("/manager/list",handler.list);
+router.post("/manager/add",handler.add);
+router.get("/manager/delByMobile",handler.delByMobile);
 
 exports.router = router
