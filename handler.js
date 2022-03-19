@@ -2,6 +2,7 @@ const constant = require("./constant")
 const moment = require('moment');
 const managerMapper = require('./dao/ManagerMapper')
 const utils = require("./utils")
+const redis = require('./redis/RedisClient')
 
 
 async function findByMobile(ctx) {
@@ -13,6 +14,7 @@ async function findByMobile(ctx) {
         resultInfo = mobileNotFound();
     }else{
         resultInfo = resultInfo[0];
+        resultInfo.likeCount = await redis.zscore(constant.MANAGER_START_KEY,resultInfo.managerId)
     }
 
     ctx.response.body = resultInfo;
@@ -20,51 +22,21 @@ async function findByMobile(ctx) {
 
 
 
-async function updateByMobile(ctx){
-    const body = ctx.request.body
-    const mobile = body.mobile;
-    const name = body.name;
-    const mail = body.mail;
-    var resultInfo = mobileNotFound();
-    if(mobile && (name || mail)){
-        const num = await managerMapper.updateByMobile(mobile,ctx.request.body);
-        if(num == 1){
-            resultInfo = await managerMapper.findByMobile(mobile);
-        }
-        console.log("update:"+resultInfo)
-
-    }
-    ctx.response.body = resultInfo;
-}
-
-async function delByMobile(ctx){
+async function starByMobile(ctx){
     const query = ctx.query
     const mobile = query.mobile;
-    var resultInfo;
-    if(mobile){
-        resultInfo = await managerMapper.findByMobile(mobile);
-        if(resultInfo.length == 1){
-            await managerMapper.delByMobile(mobile)
-        }
-
-    }
+    //处理数据库必须有一处是阻塞状态，等待数据处理完成
+    var resultInfo = await managerMapper.findByMobile(mobile);
     if(!resultInfo || resultInfo.length == 0){
-        resultInfo = mobileNotFound()
+        resultInfo = mobileNotFound();
+    }else{
+        resultInfo = resultInfo[0];
+        resultInfo.likeCount = await redis.zincrby(constant.MANAGER_START_KEY,resultInfo.managerId)
     }
+
     ctx.response.body = resultInfo;
 }
 
-
-async function add(ctx){
-    const body = ctx.request.body
-    var resultInfo = {};
-    if(!utils.isEmpty(body.mobile) & !utils.isEmpty(body.managerId) & !utils.isEmpty(body.name) & !utils.isEmpty(body.mail) & !utils.isEmpty(body.workId)){
-        const result = await managerMapper.add(ctx.request.body);
-        //不报错就插进去了
-        resultInfo = ctx.request.body;
-    }
-    ctx.response.body = resultInfo;
-}
 
 
 async function list(ctx){
@@ -76,7 +48,19 @@ async function list(ctx){
     if(pageNum <= 0){
         pageNum = 1;
     }
-    ctx.response.body = await managerMapper.list((pageNum-1)*pageSize,pageSize);;
+    var start = (pageNum-1)*pageSize;
+    var end = start + pageSize -1;
+    var starInfo = await redis.zpage(constant.MANAGER_START_KEY,start,end);
+    var managerIds = Object.keys(starInfo);
+    var list = await managerMapper.findByManagerIds(managerIds)
+    list.forEach(function (item,index) {
+        item.likeCount = starInfo[item.managerId];
+    })
+    list = list.sort(function (x,y) {
+        return x.likeCount - y.likeCount
+    })
+
+    ctx.response.body = list;
 }
 
 
@@ -88,7 +72,5 @@ function mobileNotFound(){
 
 
 exports.findByMobile=findByMobile;
-exports.updateByMobile=updateByMobile;
-exports.delByMobile=delByMobile;
+exports.starByMobile=starByMobile;
 exports.list=list;
-exports.add=add;

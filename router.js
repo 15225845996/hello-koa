@@ -10,9 +10,7 @@ const about = ctx => {
 };
 
 router.get("/manager/findByMobile",handler.findByMobile);
-router.post("/manager/updateByMobile",handler.updateByMobile);
+router.get("/manager/starByMobile",handler.starByMobile);
 router.get("/manager/list",handler.list);
-router.post("/manager/add",handler.add);
-router.get("/manager/delByMobile",handler.delByMobile);
 
 exports.router = router

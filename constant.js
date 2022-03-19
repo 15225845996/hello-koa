@@ -5,6 +5,8 @@ var users = [
     {'id':4,'name':'宋祖','age':2000},
 ];
 
+var MANAGER_START_KEY = "MANAGER_START"
+
 function getById(id){
     if(id){
         return users.find(function (item,index) {
@@ -30,3 +32,4 @@ function addTemporary(user){
 exports.getById = getById;
 exports.getUsers = getUsers;
 exports.addTemporary = addTemporary;
+exports.MANAGER_START_KEY = MANAGER_START_KEY;
