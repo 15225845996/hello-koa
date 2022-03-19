@@ -27,7 +27,7 @@ function delByMobile(mobile) {
 }
 
 function add(detail) {
-    if(!utils.isEmpty(detail.mobile) & !utils.isEmpty(detail.managerId) & !utils.isEmpty(detail.name) & !utils.isEmpty(detail.mail) & !utils.isEmpty(detail.workId)){
+    if(!utils.isEmpty(detail.mobile) && !utils.isEmpty(detail.managerId) && !utils.isEmpty(detail.name) && !utils.isEmpty(detail.mail) && !utils.isEmpty(detail.workId)){
         return knex.conn(table).insert(detail);
     }
     return null;
@@ -35,7 +35,7 @@ function add(detail) {
 
 
 function list(begin,num) {
-    if(begin >= 0 & num > 0){
+    if(begin >= 0 && num > 0){
         console.log(begin,num)
         return knex.conn(table).select().limit(num).offset(begin);
     }
