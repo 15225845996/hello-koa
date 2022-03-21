@@ -1,35 +1,10 @@
-var users = [
-    {'id':1,'name':'秦皇','age':2000},
-    {'id':2,'name':'汉武','age':2000},
-    {'id':3,'name':'唐宗','age':2000},
-    {'id':4,'name':'宋祖','age':2000},
-];
-
-var MANAGER_START_KEY = "MANAGER_START"
-
-function getById(id){
-    if(id){
-        return users.find(function (item,index) {
-            return item.id == id;
-        })
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Constant = /** @class */ (function () {
+    function Constant() {
     }
-}
-
-function getUsers(){
-    return users;
-}
-
-function addTemporary(user){
-    if(users.length < 100 && user.name && user.age){
-        user.id = users.length+1;
-        users.push(user)
-        return true;
-    }
-    return false;
-}
-
-
-exports.getById = getById;
-exports.getUsers = getUsers;
-exports.addTemporary = addTemporary;
-exports.MANAGER_START_KEY = MANAGER_START_KEY;
+    Constant.MANAGER_STAR_KEY = "MANAGER_STAR";
+    return Constant;
+}());
+exports.default = Constant;
+//# sourceMappingURL=Constant.js.map
