@@ -1,0 +1,33 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/Handler.js" />
+        <item url="file://$PROJECT_DIR$/Router.js" />
+        <item url="file://$PROJECT_DIR$/constant.js" />
+        <item url="file://$PROJECT_DIR$/dao/DataConfig.js" />
+        <item url="file://$PROJECT_DIR$/dao/DataExecuter.js" />
+        <item url="file://$PROJECT_DIR$/dao/ManagerMapper.js" />
+        <item url="file://$PROJECT_DIR$/entry/ManagerInfo.js" />
+        <item url="file://$PROJECT_DIR$/index.js" />
+        <item url="file://$PROJECT_DIR$/redis/RedisClient.js" />
+        <item url="file://$PROJECT_DIR$/redis/RedisConfig.js" />
+        <item url="file://$PROJECT_DIR$/utils/Utils.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/Handler.js" />
+      <root url="file://$PROJECT_DIR$/Router.js" />
+      <root url="file://$PROJECT_DIR$/constant.js" />
+      <root url="file://$PROJECT_DIR$/dao/DataConfig.js" />
+      <root url="file://$PROJECT_DIR$/dao/DataExecuter.js" />
+      <root url="file://$PROJECT_DIR$/dao/ManagerMapper.js" />
+      <root url="file://$PROJECT_DIR$/entry/ManagerInfo.js" />
+      <root url="file://$PROJECT_DIR$/index.js" />
+      <root url="file://$PROJECT_DIR$/redis/RedisClient.js" />
+      <root url="file://$PROJECT_DIR$/redis/RedisConfig.js" />
+      <root url="file://$PROJECT_DIR$/utils/Utils.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
