@@ -14,7 +14,7 @@ async function findByMobile(ctx) {
         resultInfo = mobileNotFound();
     }else{
         resultInfo = resultInfo[0];
-        resultInfo.likeCount = await redis.zscore(constant.MANAGER_START_KEY,resultInfo.managerId)
+        resultInfo.likeCount = await redis.zscore(constant.MANAGER_STAR_KEY,resultInfo.managerId)
     }
 
     ctx.response.body = resultInfo;
@@ -31,7 +31,7 @@ async function starByMobile(ctx){
         resultInfo = mobileNotFound();
     }else{
         resultInfo = resultInfo[0];
-        resultInfo.likeCount = await redis.zincrby(constant.MANAGER_START_KEY,resultInfo.managerId)
+        resultInfo.likeCount = await redis.zincrby(constant.MANAGER_STAR_KEY,resultInfo.managerId)
     }
 
     ctx.response.body = resultInfo;
@@ -50,7 +50,7 @@ async function list(ctx){
     }
     var start = (pageNum-1)*pageSize;
     var end = start + pageSize -1;
-    var starInfo = await redis.zpage(constant.MANAGER_START_KEY,start,end);
+    var starInfo = await redis.zpage(constant.MANAGER_STAR_KEY,start,end);
     var managerIds = Object.keys(starInfo);
     var list = await managerMapper.findByManagerIds(managerIds)
     list.forEach(function (item,index) {
